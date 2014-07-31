@@ -1,0 +1,125 @@
+<div class="header">
+  <ul class="nav nav-pills pull-right">
+    <li class="active"><a ng-href="#">Home</a></li>
+    <li><a href="#shoppinglist">Shopping List</a></li>
+    <li><a ng-href="#">Contact</a></li>
+  </ul>
+  <h3 class="text-muted">HomeManagement</h3>
+</div>
+
+<!-- Meal Card Section -->
+
+<div class = "myLists">
+  <h3 class = "typeHeader">Breakfasts</h3>
+  <div class ="well well-lg">
+    <p ng-repeat="(id, meal) in meals | filter: 'Breakfast'">{{meal.mealname}}
+    <button type = "button" class="btn btn-primary btn-xs" ng-click = "addToDay(meal)">+</button>
+    <button type = "button" class="btn btn-danger btn-xs" ng-click = "deleteMeal(meal.$$hashKey)">-</button>
+    <button type = "button" class="btn btn-warning btn-xs" ng-click = "editMeal(meal.$$hashKey)">Edit</button></p>
+  </div>
+  <h3 class = "typeHeader">Lunches</h3>
+  <div class ="well well-lg">
+    <p ng-repeat="(id, meal) in meals | filter: 'Lunch'">{{meal.mealname}}
+    <button type = "button" class="btn btn-primary btn-xs" ng-click = "addToDay(meal)">+</button>
+    <button type = "button" class="btn btn-danger btn-xs" ng-click = "deleteMeal(meal.$$hashKey)">-</button>
+    <button type = "button" class="btn btn-warning btn-xs">Edit</button></p>
+  </div>
+  <h3 class = "typeHeader">Dinners</h3>
+  <div class ="well well-lg">
+    <p ng-repeat="(id, meal) in meals | filter: 'Dinner'">{{meal.mealname}}
+    <button type = "button" class="btn btn-primary btn-xs" ng-click = "addToDay(meal)">+</button>
+    <button type = "button" class="btn btn-danger btn-xs" ng-click = "deleteMeal(meal.$$hashKey)">-</button>
+    <button type = "button" class="btn btn-warning btn-xs">Edit</button></p>
+  </div>
+  <button type="button" class="btn btn-primary btn-xs btn_add" ng-click = "addItem = ! addItem">+</button>
+  <button type = "button" class = "btn btn-info btn-xs" ng-click = "showShoppingList = true; generateShoppingList()">Shopping List</button>
+  <div class = "myShoppingList" ng-show = "showShoppingList">
+    <p ng-repeat = "item in shoppingList">{{item}}</p>
+  </div>
+</div>
+
+<!-- Shopping List -->
+
+
+<!-- New Meal Card -->
+
+<div ng-show = "addItem" class = "addItemForm">
+  <input class = "form-control" placeholder = "Meal name" ng-model = "mealname">
+  <br>
+  <div ng-repeat = "(id, ingredient) in ingredients">
+  <input class = "form-control" placeholder = "Ingredients" ng-model = "ingredient.ingredientName">
+  <button type="button" class="btn btn-danger btn-xs btn_addingredient" ng-click = "-Ingredient()">-</button>
+  </div>
+  <button type="button" class="btn btn-primary btn-xs btn_addingredient" ng-click = "addIngredient()">+</button>
+
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Breakfast" ng-model = "mealTime"> Breakfast
+  </label>
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Lunch" ng-model = "mealTime"> Lunch
+  </label>
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Dinner" ng-model = "mealTime"> Dinner
+  </label>
+
+  <textarea class="instructionsArea form-control" placeholder = "Instructions" ng-model = "instructionsArea"></textarea>
+  <button type="button" class="btn btn-success btn-md" ng-click = "addMeal()">Submit</button>
+
+  <button type="button" class="btn btn-warning btn-md" ng-show = "editButton" ng-click = "updateMeal()">Update</button>
+</div>
+
+<!-- Weekly Schedule Section -->
+
+<div class = "row">
+  <div class = "col-sm-1 dayCol">
+    <h4 ng-click = "setDay(); monday = true; day = 'Monday'" ng-class = "{selectedDay: monday}">Monday</h4>
+    <div ng-repeat = "(id, meal) in CurrentMeals | filter: 'Monday'">{{meal.mealname}}
+      <button type = "button" class="btn btn-danger btn-xs" ng-click="removeCurrentMeal(meal.$$hashKey)">-</button>
+    </div>
+  </div>
+  <div class = "col-sm-1 dayCol">
+    
+    <h4 ng-click = "day = 'Tuesday'; setDay(); tuesday = true"  ng-class = "{selectedDay: tuesday}">Tuesday</h4>
+    <div ng-repeat = "(id, meal) in CurrentMeals | filter: 'Tuesday'">{{meal.mealname}}
+      <button type = "button" class="btn btn-danger btn-xs" ng-click="removeCurrentMeal(meal.$$hashKey)">-</button>
+    </div>
+  </div>
+  <div class = "col-sm-1 dayCol">
+
+    <h4 ng-click = "day = 'Wednesday'; setDay(); wednesday = true"  ng-class = "{selectedDay: wednesday}">Wednesday</h4>
+    <div ng-repeat = "(id, meal) in CurrentMeals | filter: 'Wednesday'">{{meal.mealname}}
+      <button type = "button" class="btn btn-danger btn-xs" ng-click="removeCurrentMeal(meal.$$hashKey)">-</button>
+    </div>
+    
+  </div>
+  <div class = "col-sm-1 dayCol">
+
+    <h4 ng-click = "day = 'Thursday'; setDay(); thursday = true"  ng-class = "{selectedDay: thursday}">Thursday</h4>
+    <div ng-repeat = "(id, meal) in CurrentMeals | filter: 'Thursday'">{{meal.mealname}}
+      <button type = "button" class="btn btn-danger btn-xs" ng-click="removeCurrentMeal(meal.$$hashKey)">-</button>
+    </div>
+    
+  </div>
+  <div class = "col-sm-1 dayCol">
+    <h4 ng-click = "day = 'Friday'; setDay(); friday = true"  ng-class = "{selectedDay: friday}">Friday</h4>
+    <div ng-repeat = "(id, meal) in CurrentMeals | filter: 'Friday'">{{meal.mealname}}
+      <button type = "button" class="btn btn-danger btn-xs" ng-click="removeCurrentMeal(meal.$$hashKey)">-</button>
+    </div>
+    
+  </div>
+  <div class = "col-sm-1 dayCol">
+    <h4 ng-click = "day = 'Saturday'; setDay(); saturday = true"  ng-class = "{selectedDay: saturday}">Saturday</h4>
+    <div ng-repeat = "(id, meal) in CurrentMeals | filter: 'Saturday'">{{meal.mealname}}
+      <button type = "button" class="btn btn-danger btn-xs" ng-click="removeCurrentMeal(meal.$$hashKey)">-</button>
+    </div>
+    
+  </div>
+  <div class = "col-sm-1 dayCol">
+    <h4 ng-click = "day = 'Sunday'; setDay(); sunday = true"  ng-class = "{selectedDay: sunday}">Sunday</h4>
+    <div ng-repeat = "(id, meal) in CurrentMeals | filter: 'Sunday'">{{meal.mealname}}
+      <button type = "button" class="btn btn-danger btn-xs" ng-click="removeCurrentMeal(meal.$$hashKey)">-</button>
+    </div>
+    
+  </div>
+</div>
+
